@@ -6,7 +6,7 @@
         {
             "label": "DeployModule",
             "type": "shell",
-            "command": ".\\helpers\\_deployModule.ps1",
+            "command": ".\\helpers\\deployModule.ps1",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
