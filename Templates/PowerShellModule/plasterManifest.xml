@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <plasterManifest
   schemaVersion="1.1"
   templateType="Project" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
@@ -53,14 +53,6 @@
     </parameter>
   </parameters>
   <content>
-    <!-- <newModuleManifest
-      destination='${PLASTER_PARAM_ModuleName}.psd1'
-      moduleVersion='$PLASTER_PARAM_Version'
-      rootModule='${PLASTER_PARAM_ModuleName}.psm1'
-      author='Sergey Vasin'
-      description='$PLASTER_PARAM_Description'
-      encoding='UTF8-NoBOM'
-      powerShellVersion='5.1'/> -->
     <templateFile
       source="module.psd1"
       destination="${PLASTER_PARAM_ModuleName}.psd1"
@@ -106,13 +98,5 @@
       condition='$PLASTER_PARAM_Options -contains "Helpers"'/>
 
     <message>New module $PLASTER_PARAM_ModuleName is ready.</message>
-
-    <!-- <modify path='.vscode\tasks.json' encoding='UTF8-NoBOM'
-       condition="$PLASTER_PARAM_Options -contains 'VSCode'">
-       <replace condition="$PLASTER_FileContent -notmatch '// Author:'">
-         <original>(?s)^(.*)</original>
-         <substitute expand='true'>// Author: $PLASTER_PARAM_FullName`r`n`$1</substitute>
-        </replace>
-    </modify> -->
   </content>
 </plasterManifest>
