@@ -1,16 +1,30 @@
 
 PLASTERTEMPLATES
 
-Модуль содержит шаблоны для использования с Plaster.
+Модуль PowerShell, содержащий шаблоны для использования с Plaster.
 
 Plaster позволяет разработчикам создать структуру файлов и папок для нового модуля PowerShell.
+
+
+ИНСТАЛЛЯЦИЯ
+
+Для установки модуля PlasterTemplates используйте следующую команду.
+
+Install-Module -Name PlasterTemplates
+
+
+СПРАВОЧНАЯ ИНФОРМАЦИЯ
+
+Для получения справочной информации используйте следующую команду.
+
+Get-Help about_PlasterTemplates
 
 
 ШАБЛОНЫ:
 
 PowerShellModule - создание нового модуля PowerShell с поддержкой Visual Sudio Code, Pester и Azure Pipelies.
 
-Для создания модуля используйте следующую команду.
+Для создания модуля с использованием шаблона PowerShellModule используйте следующую команду.
 
 Invoke-Plaster -TemplatePath 'C:\Program Files\PowerShell\Modules\PlasterTemplates\Templates\PowerShellModule'
     -DestinationPath c:\PlasterCreatedModule\
@@ -18,6 +32,8 @@ Invoke-Plaster -TemplatePath 'C:\Program Files\PowerShell\Modules\PlasterTemplat
     -Description "Module created by Plaster" 
     -Version 1.0 
     -Options VSCode, Pester, AzurePipelines, Helpers
+
+Значение параметра TemplatePath зависит от каталога установки модуля PlasterTemplates.
 
 
 ПОЛУЧЕНИЕ СПИСКА ДОСТУПНЫХ ШАБЛОНОВ
