@@ -1,0 +1,27 @@
+
+PLASTERTEMPLATES
+
+Module contains templates for use with Plaster.
+
+This allows developers to scaffold file and folder structure for a new PowerShell module.
+
+
+TEMPLATES:
+
+PowerShellModule - create a new PowerShell module with Visual Studio Code, Pester, and Azure Pipelines support.
+
+Use the following command to create a new module.
+
+Invoke-Plaster -TemplatePath 'C:\Program Files\PowerShell\Modules\PlasterTemplates\Templates\PowerShellModule'
+    -DestinationPath c:\PlasterCreatedModule\
+    -ModuleName PlasterCreatedModule 
+    -Description "Module created by Plaster" 
+    -Version 1.0 
+    -Options VSCode, Pester, AzurePipelines, Helpers
+
+
+LIST AVAILABLE TEMPLATES
+
+To list templates available on the machine invoke the following cmdlet from Plaster module.
+
+Get-PlasterTemplate -IncludeInstalledModules
