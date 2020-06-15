@@ -97,6 +97,6 @@
       destination="helpers\deployModule.ps1"
       condition='$PLASTER_PARAM_Options -contains "Helpers"'/>
 
-    <message>New module $PLASTER_PARAM_ModuleName is ready.</message>
+    <message>The new module $PLASTER_PARAM_ModuleName is ready and located in the $PLASTER_DestinationPath folder.</message>
   </content>
 </plasterManifest>
