@@ -10,10 +10,12 @@ function Deploy-sthModule
     
     Remove-Item -Path $Path -Recurse -ErrorAction SilentlyContinue -Force
     New-Item -ItemType Directory -Path $Path
-    Copy-Item -Path .\* -Include *.psd1, *.psm1, *.ps1, *.ps1xml -Exclude *_* -Destination $Path
-    Copy-Item -Path .\tests -Destination $Path -Exclude *_* -Recurse
-    Copy-Item -Path .\en-us -Destination $Path -Exclude *_* -Recurse
-    Copy-Item -Path .\ru-ru -Destination $Path -Exclude *_* -Recurse
+
+    # Files starting with __ (two underlines) are temporary and should not be included in the module
+    Copy-Item -Path .\* -Include *.psd1, *.psm1, *.ps1, *.ps1xml -Exclude __* -Destination $Path
+    Copy-Item -Path .\tests -Destination $Path -Exclude __* -Recurse
+    Copy-Item -Path .\en-us -Destination $Path -Exclude __* -Recurse
+    Copy-Item -Path .\ru-ru -Destination $Path -Exclude __* -Recurse
 }
 
 $ModuleName = Split-Path -Path $PSScriptRoot\.. -Leaf
