@@ -41,3 +41,6 @@ LIST AVAILABLE TEMPLATES
 To list templates available on the machine invoke the following cmdlet from Plaster module.
 
 Get-PlasterTemplate -IncludeInstalledModules
+
+
+GitHub: https://github.com/sethworks/PlasterTemplates

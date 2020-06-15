@@ -41,3 +41,6 @@ Invoke-Plaster -TemplatePath 'C:\Program Files\PowerShell\Modules\PlasterTemplat
 Для получения списка доступных на машине шаблонов используйте следующую команду из модуля Plaster.
 
 Get-PlasterTemplate -IncludeInstalledModules
+
+
+GitHub: https://github.com/sethworks/PlasterTemplates
