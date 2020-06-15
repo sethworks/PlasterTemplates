@@ -101,8 +101,8 @@
       destination="azurePipelines\releaseStageTwo.ps1"
       condition='$PLASTER_PARAM_Options -contains "AzurePipelines"'/>
     <file
-      source="helpers\_deployModule.ps1"
-      destination="helpers\_deployModule.ps1"
+      source="helpers\deployModule.ps1"
+      destination="helpers\deployModule.ps1"
       condition='$PLASTER_PARAM_Options -contains "Helpers"'/>
 
     <message>New module $PLASTER_PARAM_ModuleName is ready.</message>
