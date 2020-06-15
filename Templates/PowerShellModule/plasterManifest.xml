@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest
+  schemaVersion="1.1"
+  templateType="Project" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+  <metadata>
+    <name>PowerShellModule</name>
+    <id>28722d1e-d255-4003-9a98-64b3794d6b09</id>
+    <version>1.0.0</version>
+    <title>PowerShell Module</title>
+    <description>Create a PowerShell Module</description>
+    <author>Sergey Vasin</author>
+    <tags>PowerShell, Module</tags>
+  </metadata>
+  <parameters>
+    <parameter
+      name='ModuleName'
+      type='text'
+      prompt='Enter the name of the module'/>
+    <parameter
+      name='Version'
+      type='text'
+      prompt='Enter the version number of the module'
+      default='0.1'/>
+    <parameter
+      name='Description'
+      type='text'
+      prompt='Enter the module description'/>
+    <parameter
+      name='Options'
+      type='multichoice'
+      default='0,1,2,3'
+      prompt='Select desired options'>
+      <choice
+        label='&amp;VSCode support'
+        help='Adds settings.json and tasks.json files'
+        value='VSCode'/>
+      <choice
+        label='&amp;Pester test support'
+        help='Adds Tests directory and a starter Pester test file'
+        value='Pester'/>
+      <choice
+        label='&amp;Azure Pipelines support'
+        help='Adds Azure Pipelies test and deployment files'
+        value='AzurePipelines'/>
+      <choice
+        label='&amp;Helper scripts'
+        help='Adds helpers directory'
+        value='Helpers'/>
+      <choice
+        label='&amp;None'
+        help='No options specified'
+        value='None'/>
+    </parameter>
+  </parameters>
+  <content>
+    <!-- <newModuleManifest
+      destination='${PLASTER_PARAM_ModuleName}.psd1'
+      moduleVersion='$PLASTER_PARAM_Version'
+      rootModule='${PLASTER_PARAM_ModuleName}.psm1'
+      author='Sergey Vasin'
+      description='$PLASTER_PARAM_Description'
+      encoding='UTF8-NoBOM'
+      powerShellVersion='5.1'/> -->
+    <templateFile
+      source="module.psd1"
+      destination="${PLASTER_PARAM_ModuleName}.psd1"
+      encoding='UTF8-NoBOM'/>
+    <file
+      source="module.psm1"
+      destination="${PLASTER_PARAM_ModuleName}.psm1" />
+    <file
+      source=".vscode\settings.json"
+      destination=".vscode\settings.json"
+      condition='$PLASTER_PARAM_Options -contains "VSCode"'/>
+    <templateFile
+      source=".vscode\tasks.json"
+      destination=".vscode\tasks.json"
+      condition='$PLASTER_PARAM_Options -contains "VSCode"'
+      encoding='UTF8-NoBOM'/>
+    <templateFile
+      source="tests\tests.ps1"
+      destination="tests\${PLASTER_PARAM_ModuleName}.tests.ps1"
+      condition='$PLASTER_PARAM_Options -contains "Pester"'
+      encoding='UTF8-NoBOM'/>
+    <templateFile
+      source="azurePipelines\azurePipelines.steps.yml"
+      destination="azurePipelines\azurePipelines.steps.yml"
+      condition='$PLASTER_PARAM_Options -contains "AzurePipelines"'
+      encoding='UTF8-NoBOM'/>
+    <templateFile
+      source="azurePipelines\azurePipelines.yml"
+      destination="azurePipelines\azurePipelines.yml"
+      condition='$PLASTER_PARAM_Options -contains "AzurePipelines"'
+      encoding='UTF8-NoBOM'/>
+    <file
+      source="azurePipelines\releaseStageOne.ps1"
+      destination="azurePipelines\releaseStageOne.ps1"
+      condition='$PLASTER_PARAM_Options -contains "AzurePipelines"'/>
+    <file
+      source="azurePipelines\releaseStageTwo.ps1"
+      destination="azurePipelines\releaseStageTwo.ps1"
+      condition='$PLASTER_PARAM_Options -contains "AzurePipelines"'/>
+    <file
+      source="helpers\_deployModule.ps1"
+      destination="helpers\_deployModule.ps1"
+      condition='$PLASTER_PARAM_Options -contains "Helpers"'/>
+
+    <message>New module $PLASTER_PARAM_ModuleName is ready.</message>
+
+    <!-- <modify path='.vscode\tasks.json' encoding='UTF8-NoBOM'
+       condition="$PLASTER_PARAM_Options -contains 'VSCode'">
+       <replace condition="$PLASTER_FileContent -notmatch '// Author:'">
+         <original>(?s)^(.*)</original>
+         <substitute expand='true'>// Author: $PLASTER_PARAM_FullName`r`n`$1</substitute>
+        </replace>
+    </modify> -->
+  </content>
+</plasterManifest>

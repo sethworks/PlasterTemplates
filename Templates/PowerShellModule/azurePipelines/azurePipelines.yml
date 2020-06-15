@@ -1,0 +1,72 @@
+name: $(Date:yyyyMMdd)$(Rev:.rr)
+
+jobs:
+- job: windows
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+    clean: true
+
+  - powershell: |
+      $PSVersionTable
+    name: WindowsPowerShellVersion
+    displayName: 'Windows PowerShell: Version'
+    condition: succeededOrFailed()
+
+  - powershell: |
+      Install-Module -Name Pester -MinimumVersion 5.0.0 -Repository PSGallery -Force
+    name: WindowsPowerShellInstallPester
+    displayName: 'Windows PowerShell: Install Pester'
+    condition: succeededOrFailed()
+
+  - powershell: |
+      Invoke-Pester .\tests\<%=$PLASTER_PARAM_ModuleName%>.tests.ps1 -OutputFile .\testResults.xml -OutputFormat NUnitXml -CodeCoverage .\<%=$PLASTER_PARAM_ModuleName%>.psm1 -CodeCoverageOutputFile .\codeCoverage.xml -CodeCoverageOutputFileFormat JaCoCo
+    name: WindowsPowerShellInvokePester
+    displayName: 'Windows PowerShell: Test with Pester'
+    condition: succeededOrFailed()
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: 'NUnit'
+      testResultsFiles: 'testResults.xml' 
+      searchFolder: '$(System.DefaultWorkingDirectory)'
+      testRunTitle: Windows PowerShell
+      failTaskOnFailedTests: true
+    name: WindowsPowerShellPublishTestResult
+    displayName: 'Windows PowerShell: Publish Test Results'
+    condition: succeededOrFailed()
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: $(System.DefaultWorkingDirectory)/codeCoverage.xml
+    name: WindowsPowerShellPublishCodeCoverage
+    displayName: 'Windows PowerShell: Publish Code Coverage'
+    condition: succeededOrFailed()
+    
+  - template: azurePipelines.steps.yml
+    parameters:
+      os: Windows
+
+- job: macos
+  pool:
+    vmImage: macOS-10.13
+  steps:
+    - checkout: self
+      clean: true
+
+    - template: azurePipelines.steps.yml
+      parameters:
+        os: macOS
+
+- job: linux
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+    - checkout: self
+      clean: true
+
+    - template: azurePipelines.steps.yml
+      parameters:
+        os: Linux
